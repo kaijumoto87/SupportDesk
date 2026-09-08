@@ -1,0 +1,20 @@
+<section class="panel">
+  <div class="panelhead">
+    <div><h2>{{ title }}</h2><mark>Live data</mark></div>
+    <div><label class="mini">⌕<input class="table-search" data-table="{{ table_id }}" placeholder="Search queue…"></label></div>
+  </div>
+  <div class="table"><table id="{{ table_id }}">
+    <thead><tr><th>□</th><th>Ticket</th><th>Customer</th><th>Priority</th><th>Status</th><th>Assignee</th><th>Updated</th></tr></thead>
+    <tbody>{% for ticket in tickets %}{% if not mine_only or ticket.assigned_to == request.user or ticket.created_by == request.user %}{% if not status_only or ticket.status == status_only %}
+      <tr class="ticket-row" tabindex="0" data-ticket-pk="{{ ticket.pk }}" data-chat-active="{% if ticket.message_count %}true{% else %}false{% endif %}" data-chat-archived="{% if ticket.chat_archived %}true{% else %}false{% endif %}" data-due-at="{{ ticket.due_at|date:'c' }}" data-updated-date="{{ ticket.updated_at|date:'Y-m-d' }}">
+        <td><input type="checkbox" aria-label="Select SD-{{ ticket.pk|stringformat:'04d' }}"></td>
+        <td><small>SD-{{ ticket.pk|stringformat:'04d' }}</small><b>{{ ticket.title }}</b><span class="ticket-description" hidden>{{ ticket.description }}</span><time class="ticket-created" hidden>{{ ticket.created_at|date:'M j, Y · g:i A' }}</time></td>
+        <td><div class="person"><i>{{ ticket.created_by.username|slice:':2'|upper }}</i><span><b>{{ ticket.created_by.get_full_name|default:ticket.created_by.username }}</b><small>{{ ticket.created_by.email }}</small></span></div></td>
+        <td><mark class="p-{{ ticket.priority|lower }}">{{ ticket.get_priority_display }}</mark></td>
+        <td><mark class="s-{{ ticket.status|slice:':1'|lower }}">{{ ticket.get_status_display }}</mark></td>
+        <td><div class="assign">{% if ticket.assigned_to %}<i>{{ ticket.assigned_to.username|slice:':2'|upper }}</i>{{ ticket.assigned_to.get_full_name|default:ticket.assigned_to.username }}{% else %}○ Unassigned{% endif %}</div></td>
+        <td>{{ ticket.updated_at|timesince }} ago</td>
+      </tr>
+    {% endif %}{% endif %}{% empty %}<tr><td colspan="7">No tickets yet. Create the first one.</td></tr>{% endfor %}</tbody>
+  </table></div>
+</section>

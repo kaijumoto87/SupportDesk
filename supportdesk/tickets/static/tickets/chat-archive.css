@@ -1,0 +1,2 @@
+.inbox-tabs{grid-template-columns:repeat(3,1fr)}.archive-chat{border:1px solid #403650!important;background:#1b1724!important;color:#b9acd0!important;border-radius:6px;padding:6px 8px;font-size:8px;white-space:nowrap}.archived-ticket{opacity:.85}
+@media(max-width:600px) and (orientation:portrait){.chat-actions{gap:4px}.archive-chat,.delete-chat{padding:6px;font-size:7px}}
