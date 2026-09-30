@@ -1,6 +1,6 @@
 # SupportDesk Frontend
 
-Responsive, dependency-free front end themed to complement AetherScript's dark terminal aesthetic.
+Responsive, dependency-free front end themed to complement a dark terminal aesthetic.
 
 Run with `python3 -m http.server 8080`, then open `http://localhost:8080`.
 
